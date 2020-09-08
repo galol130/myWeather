@@ -24,7 +24,7 @@ const paisInput = document.getElementById('pais');
 const resultado = document.getElementById('resultado');
 const citiesContainer = document.getElementById('citiesContainer');
 const toggleUnits = document.getElementById('toggleUnits');
-const urlBase = 'http://api.openweathermap.org/data/2.5/weather?q=';
+const urlBase = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const apiKey = 'd574b917b046ce060124a28c31721263';
 
 

@@ -145,3 +145,46 @@ html {
   #resultado{
     cursor: pointer;
   }
+
+  .toggleContainer{
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    position: fixed;
+    bottom: 1vw;
+    right: 7vw;
+  }
+
+
+  :root {
+    --color-background: rgba(236,201,75);
+    --color-light: #343535;
+    --border-width: 4px;
+    --border-radius: 40px;
+    --font-size: 20px;
+  }
+
+  .toggle {
+    display: flex;
+    font-size: 15px;
+    font-weight: bold;
+    border: var(--border-width) solid var(--color-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .toggle input:checked ~ .toggle--value.toggle--value_on, .toggle input:not(:checked) ~ .toggle--value.toggle--value_off {
+    color: var(--color-light);
+    background-color: var(--color-background);
+  }
+  .toggle .toggle--value {
+    padding: 11px;
+    color: var(--color-background);
+    background-color: var(--color-light);
+  }
+  .toggle input {
+    z-index: -1;
+    position: absolute;
+    opacity: 0;
+  }
+  

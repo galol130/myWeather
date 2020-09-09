@@ -164,8 +164,14 @@ function getWindDirection(grados) {
 
 //Para gestionar los mensajes de error
 function mensajeError(mensaje) {
+    //Si hay un error de cualquier tipo, va a llamar a esta función. Desde aquí elmino el spinner y repongo el texto original
+    resultado.innerHTML = `
+    <p class="text-center text-white mt-6">Type your city and select the country.</p>
+    <p class="text-center text-white mt-2">Weather results will appear here.</p>
+    `;
+    
+    //Si no hay en este momento ningú mensaje de error, se muestra el error con el mensaje recibido
     const errorMessage = document.getElementById('errorMessage');
-
     if (!errorMessage) {
         const nuevoDiv = document.createElement('div');
         nuevoDiv.id = 'errorMessage';
@@ -238,7 +244,7 @@ async function showFixedCity(APIData, idioma, urlImage) {
 
 
     const newCity = document.createElement('div');
-    newCity.classList.add('flex','justify-center');
+    newCity.classList.add('flex', 'justify-center');
     const html = `
     <div class="flex max-w-full mt-5" id="citiesContainer">
         <div class="max-w-sm w-full lg:max-w-full lg:flex">
@@ -355,19 +361,17 @@ toggleUnits.addEventListener('change', function () {
 })
 
 //Cuando la pantalla sea menor a width:800px, el toggle se mostrará al hacer scroll (300)
-window.addEventListener('scroll',function(){
-    if(window.innerWidth<800){
-        if(window.scrollY>300){
+window.addEventListener('scroll', function () {
+    if (window.innerWidth < 800) {
+        if (window.scrollY > 300) {
             toggleContainer.classList.remove('hidden');
-        }
-        else{
+        } else {
             toggleContainer.classList.add('hidden');
         }
-    }
-    else{
+    } else {
         toggleContainer.classList.remove('hidden');
     }
-}) 
+})
 
 //Mostrar spinner de carga hasta que la información de la API llegue
 function spinner() {
@@ -392,4 +396,3 @@ function spinner() {
 
     resultado.appendChild(divSpinner);
 }
-

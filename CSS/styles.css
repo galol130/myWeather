@@ -147,9 +147,6 @@ html {
   }
 
   .toggleContainer{
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     position: fixed;
     bottom: 1vw;
     right: 7vw;
@@ -172,6 +169,7 @@ html {
     border-radius: var(--border-radius);
     overflow: hidden;
     cursor: pointer;
+    text-align: center;
   }
   .toggle input:checked ~ .toggle--value.toggle--value_on, .toggle input:not(:checked) ~ .toggle--value.toggle--value_off {
     color: var(--color-light);
@@ -188,3 +186,27 @@ html {
     opacity: 0;
   }
   
+  @media (max-width: 800px) {
+    :root {
+      --color-background: rgba(236,201,75);
+      --color-light: #343535;
+      --border-width: 4px;
+      --border-radius: 30px;
+      --font-size: 10px;
+    }
+    .toggleContainer{
+      position: fixed;
+      bottom: 1px;
+      right: 10px;
+    }
+    .toggle {
+      display: flex;
+      font-size: 10px;
+      font-weight: 600;
+      border: var(--border-width) solid var(--color-light);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      cursor: pointer;
+      text-align: center;
+    }
+  }

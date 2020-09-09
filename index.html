@@ -18,29 +18,29 @@
         <h1 id="titulo" class="text-4xl mt-5 text-white font-bold uppercase text-center">Weather Search</h1>
         <div class="max-w-xl mx-auto ">
 
-            <div class="p-6 mt-5">
+            <div class="p-6 mt-2">
                 <div id="resultado">
                     <p class="text-center text-white mt-6">Type your city and select the country.</p>
                     <p class="text-center text-white mt-2">Weather results will appear here.</p>
                 </div>
             </div>
 
-            <form id="formulario" class="mt-10 " action="#" method="POST">
+            <form id="formulario" class="mt-8 " action="#" method="POST">
                 <div class="flex mb-4">
-                    <div class="w-7/12">
+                    <div class="w-7/12 pl-2 md:pl-0">
                         <input type="text" name="ciudad" id="ciudad" placeholder="type here the city name"
                             class="w-full p-2 rounded" />
                     </div>
                     <div class="w-1/12 py-2 text-center">
                         <p class="align-middle text-white text-semibold">or</p>
                     </div>
-                    <div class="w-4/12 text-right">
+                    <div class="w-4/12 text-right mr-2 md:mr-0">
                         <button id="microphone"
                             class="center bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Press
                             to speak <i class="fa fa-microphone"></i></button>
                     </div>
                 </div>
-                <div class="mt-5">
+                <div class="mt-5 mx-2 md:mx-0">
                     <select
                         class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="pais">
@@ -54,22 +54,24 @@
                         <option value="PE">Peru</option>
                     </select>
                 </div>
-
-                <input type="submit" class="mt-5 w-full bg-yellow-500 p-3  uppercase font-bold cursor-pointer rounded"
-                    value="Get Weather" />
+                <div class="text-center mx-2 md:mx-0">
+                    <input type="submit"
+                        class="mt-5 w-full bg-yellow-500 p-3 uppercase font-bold cursor-pointer rounded"
+                        value="Get Weather" />
+                </div>
 
             </form>
 
             <!-- Ciudades favoritas fijadas -->
-            <div class="container mb-10" id="citiesContainer">  
+            <div class="container border-t-2 mt-10 mb-10" id="citiesContainer">
                 <!-- Aquí se insertarán las ciudades desde app.js -->
             </div>
-            <div class="toggleContainer mb-8">   
+            <div class="toggleContainer mb-8 hidden">
                 <label class="toggle">
                     <input type="checkbox" id="toggleUnits" />
                     <span class="w-1/2 toggle--value toggle--value_on">Metric</span>
                     <span class="w-1/2 toggle--value toggle--value_off">Imperial</span>
-                  </label>
+                </label>
             </div>
         </div>
 

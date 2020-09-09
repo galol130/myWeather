@@ -24,6 +24,7 @@ const paisInput = document.getElementById('pais');
 const resultado = document.getElementById('resultado');
 const citiesContainer = document.getElementById('citiesContainer');
 const toggleUnits = document.getElementById('toggleUnits');
+const toggleContainer = document.querySelector('.toggleContainer');
 const urlBase = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const apiKey = 'd574b917b046ce060124a28c31721263';
 
@@ -59,9 +60,9 @@ function validarFormulario() {
 
 //Utilizando la API de forma sincrónica, con ayuda de los ".then"
 function buscarClima() {
+    spinner();
     let responseStatus = 0;
     let urlFetch = `${urlBase}${city},${country}&appid=${apiKey}`;
-    console.log(urlFetch);
     fetch(urlFetch)
         .then(function (response) {
             responseStatus = response.status;
@@ -89,7 +90,7 @@ function buscarClima() {
 //Creo fuera del scope de las funciones los elementos de HTML que voy a usar
 const weatherCard = document.createElement('div');
 const weatherTitle = document.createElement('h2');
-weatherTitle.classList.add('font-bold', 'text-white', 'text-center', 'my-3');
+weatherTitle.classList.add('font-bold', 'text-white', 'text-2xl', 'text-center', 'my-3');
 const clima = document.createElement('p');
 const temperatura = document.createElement('p');
 const visibilidad = document.createElement('p');
@@ -100,10 +101,10 @@ const toggleMessage = document.createElement('div');
 function mostrarResultadoMetric() {
     resultado.innerHTML = '';
     weatherCard.className = '';
-    weatherCard.classList.add('bg-indigo-800', 'text-yellow-200', 'text-center', 'font-semibold', 'my-2', 'px-3', 'py-4', 'border', 'rounded');
+    weatherCard.classList.add('bg-indigo-800', 'text-yellow-200', 'text-center', 'my-2', 'px-3', 'py-4', 'border', 'rounded');
     clima.id = "climaMetric";
     clima.innerHTML = `Weather: ${weather.main} (${weather.description})`;
-    temperatura.innerHTML = `Temperatura: ${(main.temp-273.15).toFixed(1)}°C | Feels like: ${(main.feels_like-273.15).toFixed(1)}°C`;
+    temperatura.innerHTML = `Temperatura: ${(main.temp-273.15).toFixed(1)}&#8451; | Feels like: ${(main.feels_like-273.15).toFixed(1)}&#8451;`;
     visibilidad.innerHTML = `Visibility: ${(visibility/1000).toFixed(2)}km`;
     const windDirection = getWindDirection(wind.deg);
     viento.innerHTML = `Wind: ${wind.speed}km/h from the ${windDirection}`;
@@ -126,7 +127,7 @@ function mostrarResultadoUs() {
     weatherCard.classList.add('bg-gray-900', 'text-teal-400', 'text-center', 'my-2', 'px-3', 'py-4', 'border', 'rounded');
     clima.id = "climaUs";
     clima.innerHTML = `Weather: ${weather.main} (${weather.description})`;
-    temperatura.innerHTML = `Temperatura: ${((main.temp-273.15)*(9/5)+32).toFixed(1)}°F | Feels like: ${((main.feels_like-273.15)*(9/5)+32).toFixed(1)}°F`;
+    temperatura.innerHTML = `Temperatura: ${((main.temp-273.15)*(9/5)+32).toFixed(1)}&#8457; | Feels like: ${((main.feels_like-273.15)*(9/5)+32).toFixed(1)}&#8457;`;
     visibilidad.innerHTML = `Visibility: ${(visibility/1000/1.609).toFixed(2)}mi`;
     const windDirection = getWindDirection(wind.deg);
     viento.innerHTML = `Wind: ${(wind.speed/1.609).toFixed(2)}mi per hour from the ${windDirection}`;
@@ -212,7 +213,6 @@ mic.addEventListener('click', function (e) {
         mensajeError("Ooops! We couldn't get the name of the Ciy");
     }
     recognition.onresult = function (e) {
-        console.log('entra al result');
         let {
             transcript,
             confidence
@@ -223,7 +223,6 @@ mic.addEventListener('click', function (e) {
         console.log(transcript);
         console.log(`${(confidence*100).toFixed(2)}%`);
         if (confidence > 0.9) {
-            console.log('Funciona!');
             ciudadInput.innerText = transcript;
             ciudadInput.value = transcript;
         } else {
@@ -239,6 +238,7 @@ async function showFixedCity(APIData, idioma, urlImage) {
 
 
     const newCity = document.createElement('div');
+    newCity.classList.add('flex','justify-center');
     const html = `
     <div class="flex max-w-full mt-5" id="citiesContainer">
         <div class="max-w-sm w-full lg:max-w-full lg:flex">
@@ -267,7 +267,6 @@ async function showFixedCity(APIData, idioma, urlImage) {
     `;
     newCity.innerHTML = html;
     citiesContainer.appendChild(newCity);
-    console.log(APIData);
 }
 
 //Utilizando la API de forma asíncrona para hacer sucesivas llamadas y cargar las ciudades "hard-coded"
@@ -281,6 +280,7 @@ async function loadFixedCity(cityFixed, countryFixed) {
 
         if (responseStatus === 404) {
             console.log(`CityFixed "${ciudadInput.value}" not found`);
+            mensajeError(`CityFixed "${ciudadInput.value}" not found`);
         }
         if (responseStatus === 200) {
             let datosCityFixed = {
@@ -303,10 +303,10 @@ async function loadFixedCity(cityFixed, countryFixed) {
 function getDatosLanguage(datos, idioma) {
     if (idioma === "EN") {
         return {
-            temp: `${((datos.main.temp-273.15)*(9/5)+32).toFixed(1)}°F`,
-            temp_min: `${((datos.main.temp_min-273.15)*(9/5)+32).toFixed(1)}°F`,
-            temp_max: `${((datos.main.temp_max-273.15)*(9/5)+32).toFixed(1)}°F`,
-            sensacion: `${((datos.main.feels_like-273.15)*(9/5)+32).toFixed(1)}°F`,
+            temp: `${((datos.main.temp-273.15)*(9/5)+32).toFixed(1)}&#8457;`,
+            temp_min: `${((datos.main.temp_min-273.15)*(9/5)+32).toFixed(1)}&#8457;`,
+            temp_max: `${((datos.main.temp_max-273.15)*(9/5)+32).toFixed(1)}&#8457;`,
+            sensacion: `${((datos.main.feels_like-273.15)*(9/5)+32).toFixed(1)}&#8457;`,
             humedad: datos.main.humidity,
             presion: `${(datos.main.pressure*0.03).toFixed(2)} inches`,
             visibilidad: `${(datos.visibility/1000/1.609).toFixed(2)} mi`,
@@ -318,10 +318,10 @@ function getDatosLanguage(datos, idioma) {
     }
     if (idioma === 'ES') {
         return {
-            temp: `${(datos.main.temp-273.15).toFixed(1)}°C`,
-            temp_min: `${(datos.main.temp_min-273.15).toFixed(1)}°C`,
-            temp_max: `${(datos.main.temp_max-273.15).toFixed(1)}°C`,
-            sensacion: `${(datos.main.feels_like-273.15).toFixed(1)}°C`,
+            temp: `${(datos.main.temp-273.15).toFixed(1)}&#8451;`,
+            temp_min: `${(datos.main.temp_min-273.15).toFixed(1)}&#8451;`,
+            temp_max: `${(datos.main.temp_max-273.15).toFixed(1)}&#8451;`,
+            sensacion: `${(datos.main.feels_like-273.15).toFixed(1)}&#8451;`,
             humedad: datos.main.humidity,
             presion: `${datos.main.pressure} hPa`,
             visibilidad: `${(datos.visibility/1000).toFixed(2)} km`,
@@ -337,7 +337,6 @@ function getDatosLanguage(datos, idioma) {
 //Se controla el sistema de unidades con un toggle
 toggleUnits.addEventListener('change', function () {
     //checked = true --> Metric
-    console.log(toggleUnits.checked);
     if (toggleUnits.checked) {
         citiesContainer.innerHTML = '';
         globalLang = 'ES';
@@ -354,3 +353,43 @@ toggleUnits.addEventListener('change', function () {
         showFixedCity(dataCity4, globalLang, '/images/brandon.jpg');
     }
 })
+
+//Cuando la pantalla sea menor a width:800px, el toggle se mostrará al hacer scroll (300)
+window.addEventListener('scroll',function(){
+    if(window.innerWidth<800){
+        if(window.scrollY>300){
+            toggleContainer.classList.remove('hidden');
+        }
+        else{
+            toggleContainer.classList.add('hidden');
+        }
+    }
+    else{
+        toggleContainer.classList.remove('hidden');
+    }
+}) 
+
+//Mostrar spinner de carga hasta que la información de la API llegue
+function spinner() {
+    resultado.innerHTML = '';
+
+    const divSpinner = document.createElement('div');
+    divSpinner.classList.add('sk-fading-circle');
+    divSpinner.innerHTML = `
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+    `;
+
+    resultado.appendChild(divSpinner);
+}
+
